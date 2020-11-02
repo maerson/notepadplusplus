@@ -1,0 +1,15 @@
+[submodule "scintillua"]
+	path = scintillua
+	url = git@github.com:orbitalquark/scintillua.git
+[submodule "ScintilluaPlusPlus"]
+	path = ScintilluaPlusPlus
+	url = git@github.com:dail8859/ScintilluaPlusPlus.git
+[submodule "LuaScript"]
+	path = LuaScript
+	url = git@github.com:dail8859/LuaScript.git
+[submodule "lua"]
+	path = lua
+	url = git@github.com:lua/lua.git
+[submodule "notepad-plus-plus"]
+	path = notepad-plus-plus
+	url = git@github.com:notepad-plus-plus/notepad-plus-plus.git
