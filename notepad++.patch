@@ -1,0 +1,13 @@
+diff --git "a/PowerEditor/src/MISC/Common/verifySignedfile.cpp" "b/PowerEditor/src/MISC/Common/verifySignedfile.cpp"
+index c9de4699..31807026 100644
+--- "a/PowerEditor/src/MISC/Common/verifySignedfile.cpp"
++++ "b/PowerEditor/src/MISC/Common/verifySignedfile.cpp"
+@@ -62,7 +62,7 @@ SecurityGard::SecurityGard()
+ 
+ bool SecurityGard::checkModule(const std::wstring& filePath, NppModule module2check)
+ {
+-#ifndef _DEBUG
++#if 0 //ndef _DEBUG
+ 	if (_securityMode == sm_certif)
+ 		return verifySignedLibrary(filePath, module2check);
+ 	else if (_securityMode == sm_sha256)

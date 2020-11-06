@@ -13,3 +13,21 @@
 [submodule "notepad-plus-plus"]
 	path = notepad-plus-plus
 	url = git@github.com:notepad-plus-plus/notepad-plus-plus.git
+[submodule "lpeg"]
+	path = lpeg
+	url = git@github.com:roberto-ieru/LPeg.git
+[submodule "PyNPP"]
+	path = PyNPP
+	url = git@github.com:mpcabd/PyNPP.git
+[submodule "PyPadPlusPlus"]
+	path = PyPadPlusPlus
+	url = git@github.com:bitagoras/PyPadPlusPlus.git
+[submodule "PythonScript"]
+	path = PythonScript
+	url = git@github.com:bruderstein/PythonScript.git
+[submodule "NotepadSharp"]
+	path = NotepadSharp
+	url = git@github.com:MarcSaenz/NotepadSharp.git
+[submodule "Npp-DarkNpp"]
+	path = Npp-DarkNpp
+	url = git@github.com:ozone10/Npp-DarkNpp.git
