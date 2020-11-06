@@ -1,0 +1,63 @@
+ LexLPeg.cxx | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
+
+diff --git a/LexLPeg.cxx b/LexLPeg.cxx
+index 027dd5b..5cff3e5 100644
+--- a/LexLPeg.cxx
++++ b/LexLPeg.cxx
+@@ -230,10 +230,10 @@ public:
+    * Returns the lexer property for *key*.
+    * @param key The string property key.
+    */
+-  const char * SCI_METHOD PropertyGet(const char *key) override;
++  const char * SCI_METHOD PropertyGet(const char *key) ;
+ 
+   /** Constructs a new instance of the lexer. */
+-  static ILexer5 *LexerFactoryLPeg();
++  static ILexer4 *LexerFactoryLPeg();
+ };
+ 
+ /** Lua pcall error message handler that adds a traceback. */
+@@ -683,7 +683,7 @@ void *LexerLPeg::StringResult(long lparam, const char *str) {
+   return reinterpret_cast<void *>(strlen(str));
+ }
+ 
+-LexerLPeg::LexerLPeg() : DefaultLexer("lpeg", SCLEX_LPEG), L(luaL_newstate()) {
++LexerLPeg::LexerLPeg() : DefaultLexer(), L(luaL_newstate()) {
+   // Initialize the Lua state, load libraries, and set platform variables.
+   if (!L) {
+     fprintf(stderr, "Lua failed to initialize.\n");
+@@ -976,7 +976,7 @@ const char * SCI_METHOD LexerLPeg::PropertyGet(const char *key) {
+   return props.Get(key);
+ }
+ 
+-ILexer5 *LexerLPeg::LexerFactoryLPeg() { return new LexerLPeg(); }
++ILexer4 *LexerLPeg::LexerFactoryLPeg() { return new LexerLPeg(); }
+ 
+ LexerModule lmLPeg(SCLEX_LPEG, LexerLPeg::LexerFactoryLPeg, "lpeg");
+ 
+@@ -1054,8 +1054,8 @@ EXPORT_FUNCTION void CALLING_CONVENTION SetLibraryProperty(
+  * @param name Optional lexer name to initially load. It can be specified later
+  *   using the `LexerLPeg::LexerNameKey` property.
+  */
+-EXPORT_FUNCTION ILexer5* CALLING_CONVENTION CreateLexer(const char *name) {
+-  ILexer5* lpegLexer = LexerLPeg::LexerFactoryLPeg();
++EXPORT_FUNCTION ILexer4* CALLING_CONVENTION CreateLexer(const char *name) {
++  ILexer4* lpegLexer = LexerLPeg::LexerFactoryLPeg();
+   if (!lpegHome.empty())
+     lpegLexer->PrivateCall(
+       SCI_LOADLEXERLIBRARY, const_cast<char *>(lpegHome.c_str()));
+@@ -1065,10 +1065,11 @@ EXPORT_FUNCTION ILexer5* CALLING_CONVENTION CreateLexer(const char *name) {
+     if (strncmp(name, "lpeg_", 5) == 0) name += 5; // prefix used for SciTE
+     lpegLexer->PrivateCall(SCI_SETLEXERLANGUAGE, const_cast<char *>(name));
+   }
+-  if (strlen(lpegLexer->PropertyGet(LexerLPeg::LexerErrorKey)) > 0) {
++  /*
++  if (strlen(lpegLexer->PropertySet(LexerLPeg::LexerErrorKey)) > 0) {
+     lpegLexer->Release();
+     return nullptr;
+-  }
++  }*/
+   return lpegLexer;
+ }
+ 

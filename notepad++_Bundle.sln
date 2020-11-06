@@ -12,6 +12,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lua", "Lua.vcxproj", "{FCFB
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LuaScript", "LuaScript.vcxproj", "{1590D7CD-7D3A-4AB7-A355-EE02F7FB987D}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "scintillua", "scintillua.vcxproj", "{6099176B-96DF-4EBD-9802-909B3C366274}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -36,14 +38,22 @@ Global
 		{FCFBB3B0-8628-4CD0-A9B7-1BFB34E31E2A}.Release|x64.Build.0 = Release|x64
 		{FCFBB3B0-8628-4CD0-A9B7-1BFB34E31E2A}.Release|x86.ActiveCfg = Release|Win32
 		{FCFBB3B0-8628-4CD0-A9B7-1BFB34E31E2A}.Release|x86.Build.0 = Release|Win32
-		{1590D7CD-7D3A-4AB7-A355-EE02F7FB987D}.Debug|x64.ActiveCfg = Debug|x64
-		{1590D7CD-7D3A-4AB7-A355-EE02F7FB987D}.Debug|x64.Build.0 = Debug|x64
-		{1590D7CD-7D3A-4AB7-A355-EE02F7FB987D}.Debug|x86.ActiveCfg = Debug|Win32
-		{1590D7CD-7D3A-4AB7-A355-EE02F7FB987D}.Debug|x86.Build.0 = Debug|Win32
+		{1590D7CD-7D3A-4AB7-A355-EE02F7FB987D}.Debug|x64.ActiveCfg = Release|x64
+		{1590D7CD-7D3A-4AB7-A355-EE02F7FB987D}.Debug|x64.Build.0 = Release|x64
+		{1590D7CD-7D3A-4AB7-A355-EE02F7FB987D}.Debug|x86.ActiveCfg = Release|Win32
+		{1590D7CD-7D3A-4AB7-A355-EE02F7FB987D}.Debug|x86.Build.0 = Release|Win32
 		{1590D7CD-7D3A-4AB7-A355-EE02F7FB987D}.Release|x64.ActiveCfg = Release|x64
 		{1590D7CD-7D3A-4AB7-A355-EE02F7FB987D}.Release|x64.Build.0 = Release|x64
 		{1590D7CD-7D3A-4AB7-A355-EE02F7FB987D}.Release|x86.ActiveCfg = Release|Win32
 		{1590D7CD-7D3A-4AB7-A355-EE02F7FB987D}.Release|x86.Build.0 = Release|Win32
+		{6099176B-96DF-4EBD-9802-909B3C366274}.Debug|x64.ActiveCfg = Debug|x64
+		{6099176B-96DF-4EBD-9802-909B3C366274}.Debug|x64.Build.0 = Debug|x64
+		{6099176B-96DF-4EBD-9802-909B3C366274}.Debug|x86.ActiveCfg = Debug|Win32
+		{6099176B-96DF-4EBD-9802-909B3C366274}.Debug|x86.Build.0 = Debug|Win32
+		{6099176B-96DF-4EBD-9802-909B3C366274}.Release|x64.ActiveCfg = Release|x64
+		{6099176B-96DF-4EBD-9802-909B3C366274}.Release|x64.Build.0 = Release|x64
+		{6099176B-96DF-4EBD-9802-909B3C366274}.Release|x86.ActiveCfg = Release|Win32
+		{6099176B-96DF-4EBD-9802-909B3C366274}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

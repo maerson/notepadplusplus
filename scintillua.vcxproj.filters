@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\notepad-plus-plus\scintilla\lexlib\Accessor.cxx" />
+    <ClCompile Include="..\notepad-plus-plus\scintilla\lexlib\DefaultLexer.cxx" />
+    <ClCompile Include="..\notepad-plus-plus\scintilla\lexlib\LexerBase.cxx" />
+    <ClCompile Include="..\notepad-plus-plus\scintilla\lexlib\LexerModule.cxx" />
+    <ClCompile Include="..\notepad-plus-plus\scintilla\lexlib\PropSetSimple.cxx" />
+    <ClCompile Include="..\notepad-plus-plus\scintilla\lexlib\WordList.cxx" />
+    <ClCompile Include="LexLPeg.cxx" />
+    <ClCompile Include="..\notepad-plus-plus\scintilla\lexlib\LexerSimple.cxx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="aa">
+      <UniqueIdentifier>{fb897598-3892-4249-b2e0-92280f08c33d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\notepad-plus-plus\scintilla\lexlib\Accessor.h" />
+    <ClInclude Include="..\notepad-plus-plus\scintilla\lexlib\DefaultLexer.h" />
+    <ClInclude Include="..\notepad-plus-plus\scintilla\lexlib\LexerBase.h" />
+    <ClInclude Include="..\notepad-plus-plus\scintilla\lexlib\LexerModule.h" />
+    <ClInclude Include="..\notepad-plus-plus\scintilla\lexlib\PropSetSimple.h" />
+    <ClInclude Include="..\notepad-plus-plus\scintilla\lexlib\WordList.h" />
+    <ClInclude Include="..\notepad-plus-plus\scintilla\lexlib\LexerSimple.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\bin\Release_Win32\lpeg.lib" />
+    <Library Include="..\bin\Release_Win32\Lua.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\ScintilluaPlusPlus\ext\scintillua\LexLPeg.def" />
+  </ItemGroup>
+</Project>

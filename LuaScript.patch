@@ -1,101 +1,66 @@
- LuaScript.sln              |  5 ++++-
- src/Dialogs/LuaConsole.h   |  2 +-
- src/LuaScript.cpp          |  1 +
- src/LuaScript.vcxproj      |  7 +++++--
- src/SciTE/LuaExtension.cpp | 16 ++++++++++------
- 5 files changed, 21 insertions(+), 10 deletions(-)
+ src/Dialogs/LuaConsole.h   |  4 ++++
+ src/NppIFaceTable.cpp      | 10 +++++-----
+ src/SciTE/LuaExtension.cpp | 10 +++++-----
+ 3 files changed, 14 insertions(+), 10 deletions(-)
 
-diff --git a/LuaScript.sln b/LuaScript.sln
-index ac9f75e..4a09969 100644
---- a/LuaScript.sln
-+++ b/LuaScript.sln
-@@ -8,7 +8,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LuaScript", "src\LuaScript.
- 		{FCFBB3B0-8628-4CD0-A9B7-1BFB34E31E2A} = {FCFBB3B0-8628-4CD0-A9B7-1BFB34E31E2A}
- 	EndProjectSection
- EndProject
--Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lua", "src\Lua.vcxproj", "{FCFBB3B0-8628-4CD0-A9B7-1BFB34E31E2A}"
-+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lua", "..\lua\Lua.vcxproj", "{FCFBB3B0-8628-4CD0-A9B7-1BFB34E31E2A}"
- EndProject
- Global
- 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-@@ -38,4 +38,7 @@ Global
- 	GlobalSection(SolutionProperties) = preSolution
- 		HideSolutionNode = FALSE
- 	EndGlobalSection
-+	GlobalSection(ExtensibilityGlobals) = postSolution
-+		SolutionGuid = {8FE4AE36-0234-4268-8B1B-C8E650B343A2}
-+	EndGlobalSection
- EndGlobal
 diff --git a/src/Dialogs/LuaConsole.h b/src/Dialogs/LuaConsole.h
-index 9c395a5..1a9c8b9 100644
+index 9c395a5..2f1ab19 100644
 --- a/src/Dialogs/LuaConsole.h
 +++ b/src/Dialogs/LuaConsole.h
-@@ -22,7 +22,7 @@
+@@ -21,9 +21,13 @@
+ #include "ConsoleDialog.h"
  #include "LuaExtension.h"
  #include "PluginInterface.h"
++#include "dockingResource.h"
  
--#include "lua.hpp"
-+//#include "lua.hpp"
+ #include "lua.hpp"
  
++#define SCI_UNUSED 0
++const wchar_t NPP_PLUGIN_NAME[] = TEXT("LuaScript");
++
  class LuaConsole final {
  public:
-diff --git a/src/LuaScript.cpp b/src/LuaScript.cpp
-index 9730afd..4ac3e9e 100644
---- a/src/LuaScript.cpp
-+++ b/src/LuaScript.cpp
-@@ -30,6 +30,7 @@
- #include "StyleWriter.h"
- #include "NppLuaScript.h"
- #include "SciLexer.h"
-+#include <lua.h>
- 
- // --- Menu callbacks ---
- static void showConsole();
-diff --git a/src/LuaScript.vcxproj b/src/LuaScript.vcxproj
-index 48ca9ab..66351aa 100644
---- a/src/LuaScript.vcxproj
-+++ b/src/LuaScript.vcxproj
-@@ -88,9 +88,12 @@
-   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-     <TargetName>$(ProjectName)</TargetName>
-   </PropertyGroup>
-+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-+    <IncludePath>G:\notepadplusplus\lua;$(IncludePath)</IncludePath>
-+  </PropertyGroup>
-   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-     <ClCompile>
--      <AdditionalIncludeDirectories>.\SciTE;.\lua\src;.\Dialogs;.\Npp;.\Utilities;.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-+      <AdditionalIncludeDirectories>.\SciTE;..\..\lua\src;.\Dialogs;.\Npp;.\Utilities;.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-       <PreprocessorDefinitions>WIN32_LEAN_AND_MEAN;WIN32;NDEBUG;_WINDOWS;_USRDLL;$(ProjectName)_EXPORTS;__STDC_WANT_SECURE_LIB__=1;_CRT_NONSTDC_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-       <WarningLevel>Level3</WarningLevel>
-@@ -104,7 +107,7 @@
-       <SDLCheck>true</SDLCheck>
-     </ClCompile>
-     <Link>
--      <AdditionalDependencies>Lua.lib;shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-+      <AdditionalDependencies>$(OutDir)Lua.lib;shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-       <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
-       <GenerateDebugInformation>true</GenerateDebugInformation>
-       <SubSystem>Windows</SubSystem>
+ 	explicit LuaConsole(HWND hNotepad);
+diff --git a/src/NppIFaceTable.cpp b/src/NppIFaceTable.cpp
+index 457f740..3e0cba2 100644
+--- a/src/NppIFaceTable.cpp
++++ b/src/NppIFaceTable.cpp
+@@ -73,7 +73,7 @@ static std::vector<IFaceConstant> ifaceConstants = {
+ 	{ "IDM_EDIT_REDO", IDM_EDIT_REDO },
+ 	{ "IDM_EDIT_REMOVEEMPTYLINES", IDM_EDIT_REMOVEEMPTYLINES },
+ 	{ "IDM_EDIT_REMOVEEMPTYLINESWITHBLANK", IDM_EDIT_REMOVEEMPTYLINESWITHBLANK },
+-	{ "IDM_EDIT_REMOVE_DUP_LINES", IDM_EDIT_REMOVE_DUP_LINES },
++//	{ "IDM_EDIT_REMOVE_DUP_LINES", IDM_EDIT_REMOVE_DUP_LINES },
+ 	{ "IDM_EDIT_RMV_TAB", IDM_EDIT_RMV_TAB },
+ 	{ "IDM_EDIT_RTL", IDM_EDIT_RTL },
+ 	{ "IDM_EDIT_SEARCHONINTERNET", IDM_EDIT_SEARCHONINTERNET },
+@@ -192,7 +192,7 @@ static std::vector<IFaceConstant> ifaceConstants = {
+ 	{ "IDM_FORMAT_WIN_1257", IDM_FORMAT_WIN_1257 },
+ 	{ "IDM_FORMAT_WIN_1258", IDM_FORMAT_WIN_1258 },
+ 	{ "IDM_FORUM", IDM_FORUM },
+-	{ "IDM_HELP", IDM_HELP },
++//	{ "IDM_HELP", IDM_HELP },
+ 	{ "IDM_HOMESWEETHOME", IDM_HOMESWEETHOME },
+ 	{ "IDM_LANGSTYLE_CONFIG_DLG", IDM_LANGSTYLE_CONFIG_DLG },
+ 	{ "IDM_LANG_ADA", IDM_LANG_ADA },
+@@ -376,9 +376,9 @@ static std::vector<IFaceConstant> ifaceConstants = {
+ 	{ "IDM_VIEW_DRAWTABBAR_MULTILINE", IDM_VIEW_DRAWTABBAR_MULTILINE },
+ 	{ "IDM_VIEW_DRAWTABBAR_TOPBAR", IDM_VIEW_DRAWTABBAR_TOPBAR },
+ 	{ "IDM_VIEW_DRAWTABBAR_VERTICAL", IDM_VIEW_DRAWTABBAR_VERTICAL },
+-	{ "IDM_VIEW_EDGEBACKGROUND", IDM_VIEW_EDGEBACKGROUND },
+-	{ "IDM_VIEW_EDGELINE", IDM_VIEW_EDGELINE },
+-	{ "IDM_VIEW_EDGENONE", IDM_VIEW_EDGENONE },
++//	{ "IDM_VIEW_EDGEBACKGROUND", IDM_VIEW_EDGEBACKGROUND },
++//	{ "IDM_VIEW_EDGELINE", IDM_VIEW_EDGELINE },
++//	{ "IDM_VIEW_EDGENONE", IDM_VIEW_EDGENONE },
+ 	{ "IDM_VIEW_EOL", IDM_VIEW_EOL },
+ 	{ "IDM_VIEW_FILEBROWSER", IDM_VIEW_FILEBROWSER },
+ 	{ "IDM_VIEW_FILESWITCHER_PANEL", IDM_VIEW_FILESWITCHER_PANEL },
 diff --git a/src/SciTE/LuaExtension.cpp b/src/SciTE/LuaExtension.cpp
-index 7a17b56..a97438f 100644
+index 7a17b56..861521b 100644
 --- a/src/SciTE/LuaExtension.cpp
 +++ b/src/SciTE/LuaExtension.cpp
-@@ -37,7 +37,11 @@
- #include "SciIFaceTable.h"
- #include "NppIFaceTable.h"
- 
--#include "lua.hpp"
-+extern "C" {
-+#include "lua.h"
-+#include "lualib.h"
-+#include "lauxlib.h"
-+}
- 
- IFaceTableMixer ifacemixer;
- 
-@@ -285,7 +289,7 @@ static int cf_npp_add_callback_single(lua_State *L) {
+@@ -285,7 +285,7 @@ static int cf_npp_add_callback_single(lua_State *L) {
  	}
  
  	// Get the length of the table
@@ -104,7 +69,7 @@ index 7a17b56..a97438f 100644
  
  	lua_pushvalue(L, -3); // copy the callback function to the top of the stack
  	lua_seti(L, -2, len + 1);
-@@ -303,7 +307,7 @@ static int cf_npp_add_callback(lua_State *L) {
+@@ -303,7 +303,7 @@ static int cf_npp_add_callback(lua_State *L) {
  		cf_npp_add_callback_single(L);
  	}
  	else {
@@ -113,7 +78,7 @@ index 7a17b56..a97438f 100644
  
  		if (len == 0)
  			luaL_argerror(L, 1, "non-empty array required");
-@@ -559,7 +563,7 @@ static int cf_npp_add_shortcut(lua_State *L) {
+@@ -559,7 +559,7 @@ static int cf_npp_add_shortcut(lua_State *L) {
  	}
  
  	// Get the length of the table
@@ -122,16 +87,16 @@ index 7a17b56..a97438f 100644
  	lua_pushvalue(L, 3); // the function
  	lua_seti(L, -2, len + 1);
  
-@@ -785,7 +789,7 @@ static int cf_match_replace(lua_State *L) {
+@@ -785,7 +785,7 @@ static int cf_match_replace(lua_State *L) {
  
  	host->Send(pmo->pane, SCI_SETTARGETSTART, pmo->startPos, 0);
  	host->Send(pmo->pane, SCI_SETTARGETEND, pmo->endPos, 0);
 -	host->Send(pmo->pane, SCI_REPLACETARGET, lua_rawlen(L, 2), SptrFromString(replacement));
-+	host->Send(pmo->pane, SCI_REPLACETARGET, (unsigned int)lua_rawlen(L, 2), SptrFromString(replacement));
++	host->Send(pmo->pane, SCI_REPLACETARGET, (uptr_t)lua_rawlen(L, 2), SptrFromString(replacement));
  	pmo->endPos = static_cast<int>(host->Send(pmo->pane, SCI_GETTARGETEND, 0, 0));
  	return 0;
  }
-@@ -1799,7 +1803,7 @@ bool LuaExtension::OnExecute(const char *s) {
+@@ -1799,7 +1799,7 @@ bool LuaExtension::OnExecute(const char *s) {
  				lua_getglobal(luaState, "print");
  				lua_insert(luaState, 1);
  				if (lua_pcall(luaState, lua_gettop(luaState) - 1, 0, 0) != 0)
