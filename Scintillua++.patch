@@ -1,0 +1,16 @@
+ src/Main.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/Main.cpp b/src/Main.cpp
+index 5f76f70..abdc906 100644
+--- a/src/Main.cpp
++++ b/src/Main.cpp
+@@ -155,7 +155,7 @@ extern "C" __declspec(dllexport) FuncItem * getFuncsArray(int *nbF) {
+ 	return funcItem;
+ }
+ 
+-extern "C" __declspec(dllexport) void beNotified(const SCNotification *notify) {
++extern "C" __declspec(dllexport) void beNotified( SCNotification *notify) {
+ 	static bool isReady = false;
+ 	static std::wstring fileBeingSaved;
+ 

@@ -14,6 +14,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LuaScript", "LuaScript.vcxp
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "scintillua", "scintillua.vcxproj", "{6099176B-96DF-4EBD-9802-909B3C366274}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Scintillua++", "Scintillua++.vcxproj", "{6DB9253C-66BB-48D6-BD31-0BBBF04BB1E4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -54,6 +56,14 @@ Global
 		{6099176B-96DF-4EBD-9802-909B3C366274}.Release|x64.Build.0 = Release|x64
 		{6099176B-96DF-4EBD-9802-909B3C366274}.Release|x86.ActiveCfg = Release|Win32
 		{6099176B-96DF-4EBD-9802-909B3C366274}.Release|x86.Build.0 = Release|Win32
+		{6DB9253C-66BB-48D6-BD31-0BBBF04BB1E4}.Debug|x64.ActiveCfg = Debug|x64
+		{6DB9253C-66BB-48D6-BD31-0BBBF04BB1E4}.Debug|x64.Build.0 = Debug|x64
+		{6DB9253C-66BB-48D6-BD31-0BBBF04BB1E4}.Debug|x86.ActiveCfg = Debug|Win32
+		{6DB9253C-66BB-48D6-BD31-0BBBF04BB1E4}.Debug|x86.Build.0 = Debug|Win32
+		{6DB9253C-66BB-48D6-BD31-0BBBF04BB1E4}.Release|x64.ActiveCfg = Release|x64
+		{6DB9253C-66BB-48D6-BD31-0BBBF04BB1E4}.Release|x64.Build.0 = Release|x64
+		{6DB9253C-66BB-48D6-BD31-0BBBF04BB1E4}.Release|x86.ActiveCfg = Release|Win32
+		{6DB9253C-66BB-48D6-BD31-0BBBF04BB1E4}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
