@@ -31,3 +31,6 @@
 [submodule "NppPythonScripts"]
 	path = NppPythonScripts
 	url = git@github.com:Ekopalypse/NppPythonScripts.git
+[submodule "NppGraphViz"]
+	path = NppGraphViz
+	url = git@github.com:jrebacz/NppGraphViz.git
