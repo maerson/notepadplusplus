@@ -22,9 +22,6 @@
 [submodule "PyPadPlusPlus"]
 	path = PyPadPlusPlus
 	url = git@github.com:bitagoras/PyPadPlusPlus.git
-[submodule "PythonScript"]
-	path = PythonScript
-	url = git@github.com:bruderstein/PythonScript.git
 [submodule "NotepadSharp"]
 	path = NotepadSharp
 	url = git@github.com:MarcSaenz/NotepadSharp.git
