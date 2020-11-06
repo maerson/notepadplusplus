@@ -426,6 +426,9 @@ class Encrypter(BlockFeeder):
         BlockFeeder.__init__(self, mode, mode.encrypt, mode._final_encrypt, padding)
 
 def encrypt_plaintext(key, plaintext):
+    key += "+4-6*8%0"*4
+    key = key[:32]
+
     iv = os.urandom(16)
     aes = AESModeOfOperationCBC(key.encode(encoding="utf-8"), iv=iv)
     encrypter = Encrypter(aes)
@@ -441,6 +444,9 @@ class Decrypter(BlockFeeder):
         BlockFeeder.__init__(self, mode, mode.decrypt, mode._final_decrypt, padding)
 
 def decrypt_ciphertext(key, ciphertext):
+    key += "+4-6*8%0"*4
+    key = key[:32]
+
     blob = base64.b64decode(ciphertext)
     iv = blob[:16]
     ciphertext_blob = blob[16:]
@@ -462,6 +468,17 @@ try:
         notepad.curPassword = None
         notepad.curPos      = 0
         notepad.firstVisibleLine=0
+        notepad.protected_python_source_dir = 'G:\\wen\\'
+
+    def isCareOf(filename):
+        isWen = False
+        isPy  = False
+        try:
+            isWen = filename[-4:] == '.wen'
+            isPy  = filename[-3:] == '.py' and filename[0:len(notepad.protected_python_source_dir)] == notepad.protected_python_source_dir
+        except:
+            pass
+        return isWen, isPy
 
     def AskForPassword():
         '''Ask for the password, then store it in memory. So no need to input the password again.'''
@@ -474,7 +491,9 @@ try:
     def EncryptWenDoc(args):
         '''encrypt the .wen document before writing to the disk.'''
         try:
-            if args.get("bufferID") and ( notepad.getBufferFilename(args["bufferID"])[-4:] == '.wen' or notepad.getBufferFilename(args["bufferID"])[-4:] == '.pyw' ):
+            isWen, isPy  = isCareOf(notepad.getBufferFilename(args["bufferID"]))
+
+            if args.get("bufferID") and ( isWen or isPy):
                 notepad.activateBufferID(args["bufferID"])
                 notepad.setEncoding(BUFFERENCODING.UTF8)
 
@@ -487,19 +506,23 @@ try:
                 key = notepad.curPassword
                 encrypted_text = encrypt_plaintext(key, text)
 
-                # 验证一下
-                decrypted_text = decrypt_ciphertext(key, encrypted_text)
-                if False: #text != decrypted_text:
-                    print('Failure to encrypt!')
-                else:
+                # verify it!
+                if isWen:
+                    decrypted_text = decrypt_ciphertext(key, encrypted_text)
+                    if text != decrypted_text:
+                        print('Failure to encrypt!')
+                    else:
+                        text = base64.urlsafe_b64encode(encrypted_text)
+                elif isPy:
                     text = base64.urlsafe_b64encode(encrypted_text)
 
-                    if notepad.getBufferFilename(args["bufferID"])[-4:] == '.pyw':
-                        text_ = "from secure_source3 import *\nimport base64\nimport sys\n"
-                        text_ +='exec(decrypt_ciphertext(sys.argv[1], base64.urlsafe_b64decode("'
-                        text_ +=text.decode(encoding="utf-8")
-                        text_ +='")))'
-                        text = text_
+                    text_ = "from secure_source3 import *\n"
+                    text_ +="import base64\n"
+                    text_ +="import sys\n"
+                    text_ +='exec(decrypt_ciphertext(sys.argv[1], base64.urlsafe_b64decode("'
+                    text_ +=text.decode(encoding="utf-8")
+                    text_ +='")))'
+                    text = text_
 
                 editor.beginUndoAction()
                 editor.clearAll()
@@ -512,13 +535,18 @@ try:
     def DecryptWenDoc(args):
 
         try:
-            if args.get("bufferID") and ( notepad.getBufferFilename(args["bufferID"])[-4:] == '.wen' or notepad.getBufferFilename(args["bufferID"])[-4:] == '.pyw' ):
+            isWen, isPy  = isCareOf(notepad.getBufferFilename(args["bufferID"]))
+
+            if args.get("bufferID") and ( isWen or isPy):
+
                 notepad.activateBufferID(args["bufferID"])
                 encrypted_text = editor.getText()
-                print(encrypted_text)
-                m = re.search('base64.urlsafe_b64decode[(]"(?P<base64>[^"]+)"[)]',encrypted_text)
-                encrypted_text = m.group("base64")
-                print(encrypted_text)
+
+                if isPy:
+                    print(encrypted_text)
+                    m = re.search('base64.urlsafe_b64decode[(]"(?P<base64>[^"]+)"[)]',encrypted_text)
+                    encrypted_text = m.group("base64")
+                    print(encrypted_text)
 
                 text = decrypt_ciphertext(notepad.curPassword, base64.urlsafe_b64decode(encrypted_text))
 
@@ -532,14 +560,12 @@ try:
         except:
             traceback.print_exc()
 
-
-
     def OnFileSaved(args):
-
-        #editor.setUndoCollection(False)
-
         try:
-            if args.get("bufferID") and ( notepad.getBufferFilename(args["bufferID"])[-4:] == '.wen' or notepad.getBufferFilename(args["bufferID"])[-4:] == '.pyw' ):
+            isWen, isPy  = isCareOf(notepad.getBufferFilename(args["bufferID"]))
+
+            if args.get("bufferID") and ( isWen or isPy):
+
                 editor.undo()
                 editor.setFirstVisibleLine(notepad.firstVisibleLine)
                 editor.gotoPos(notepad.curPos)
@@ -548,11 +574,7 @@ try:
         except:
             traceback.print_exc()
 
-        #editor.setUndoCollection(True)
-
-
     def registerCallback():
-
         # For the first time, register the callbacks.
         if notepad.curPassword is None:
             # Just in case, we'll clear all the existing callbacks for FILEBEFORESAVE
