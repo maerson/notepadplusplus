@@ -28,3 +28,6 @@
 [submodule "Npp-DarkNpp"]
 	path = Npp-DarkNpp
 	url = git@github.com:ozone10/Npp-DarkNpp.git
+[submodule "NppPythonScripts"]
+	path = NppPythonScripts
+	url = git@github.com:Ekopalypse/NppPythonScripts.git
